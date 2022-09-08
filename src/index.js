@@ -45,6 +45,19 @@ const checkWord = () => {
   if (myAnswer.join("") === secretWord.join("")) {
     console.log("Ganaste un oso de peluche");
   } else {
+    for (let i = 0; i < 6; i++) {
+      switch (true) {
+        case myAnswer[i] === secretWord[i]:
+          positions.push("green");
+          break;
+        case secretWord.includes(myAnswer[i]):
+          positions.push("brown");
+        default:
+          positions.push("gray");
+          break;
+      }
+    }
+    console.log(positions);
   }
 };
 
