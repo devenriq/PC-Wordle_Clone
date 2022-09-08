@@ -1,4 +1,6 @@
 const keyboard = document.querySelector("#keyboard");
+const grid = document.querySelector("#grid");
+
 const keyboardLetters = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ñ"],
@@ -9,6 +11,19 @@ const listElements = [];
 let myAnswer = [];
 const secretWord = ["c", "o", "o", "k", "i", "e"];
 let positions = [];
+
+const rows = [];
+
+for (let i = 0; i < 6; i++) {
+  const list = document.createElement("ul");
+  list.classList.add("grid-row");
+  const listItem = document.createElement("li");
+  listItem.classList.add("row-item");
+  list.append(listItem);
+  rows.push(list);
+}
+
+grid.append(...rows);
 
 keyboardLetters.map((letters) => {
   const list = document.createElement("ul");
@@ -42,26 +57,33 @@ keyboardLetters.map((letters) => {
 keyboard.append(...listElements);
 
 const checkWord = () => {
-  if (myAnswer.join("") === secretWord.join("")) {
-    console.log("Ganaste un oso de peluche");
-  } else {
-    for (let i = 0; i < 6; i++) {
-      switch (true) {
-        case myAnswer[i] === secretWord[i]:
-          positions.push("green");
-          break;
-        case secretWord.includes(myAnswer[i]):
-          positions.push("brown");
-        default:
-          positions.push("gray");
-          break;
+  if (myAnswer.length === 6) {
+    if (myAnswer.join("") === secretWord.join("")) {
+      console.log("Ganaste un oso de peluche");
+    } else {
+      for (let i = 0; i < 6; i++) {
+        switch (true) {
+          case myAnswer[i] === secretWord[i]:
+            positions.push("green");
+            break;
+          case secretWord.includes(myAnswer[i]):
+            positions.push("brown");
+          default:
+            positions.push("gray");
+            break;
+        }
       }
+      console.log(positions);
     }
-    console.log(positions);
+  } else {
+    alert(`Your response is just ${myAnswer.length} long. Please, complete it`);
   }
 };
 
 const deleteLetter = () => {
+  if (myAnswer.length === 0) {
+    alert(`Your answer is in blanc`);
+  }
   myAnswer.pop();
   console.log(myAnswer);
 };
@@ -70,6 +92,8 @@ const pressLetter = () => {
   const button = event.target;
   if (myAnswer.length < 6) {
     myAnswer.push(button.id);
+    console.log(myAnswer);
+  } else {
+    alert(`Your word is complete`);
   }
-  console.log(myAnswer);
 };
