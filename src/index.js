@@ -11,15 +11,20 @@ const listElements = [];
 let myAnswer = [];
 const secretWord = ["c", "o", "o", "k", "i", "e"];
 let positions = [];
+let attempts = 0;
 
 const rows = [];
 
-for (let i = 0; i < 6; i++) {
+for (let row = 0; row < 6; row++) {
   const list = document.createElement("ul");
+  for (let column = 0; column < 6; column++) {
+    const listItem = document.createElement("li");
+    listItem.classList.add("row-item");
+    listItem.id = `${row}-${column}`;
+    list.append(listItem);
+  }
+
   list.classList.add("grid-row");
-  const listItem = document.createElement("li");
-  listItem.classList.add("row-item");
-  list.append(listItem);
   rows.push(list);
 }
 
@@ -91,8 +96,14 @@ const deleteLetter = () => {
 const pressLetter = () => {
   const button = event.target;
   if (myAnswer.length < 6) {
+    const currentItem = document.getElementById(
+      `#${attempts}-${myAnswer.length}`
+    );
+    // currentItem.textContent = button.textContent;
+    console.log(button.textContent);
     myAnswer.push(button.id);
     console.log(myAnswer);
+    // console.log(currentItem);
   } else {
     alert(`Your word is complete`);
   }
